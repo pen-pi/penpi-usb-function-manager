@@ -7,7 +7,7 @@ The python script will use these scripts to make, configure and delete the virtu
 
 Must me run as root
 
-## As Raw bash
+## As bash
 
 Each script has its own help menu. 
 1. Create device: run `functions/create.sh` 
@@ -66,7 +66,7 @@ Example: `"48:6f:73:74:50:45"`
 
 
 
-## Usage - Python Lib
+## As Python Lib
 
 To be Implemented
 
