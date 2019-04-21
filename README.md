@@ -9,8 +9,18 @@ Must me run as root
 
 ## As bash
 
-Each script has its own help menu. 
-1. Create device: run `functions/create.sh` 
+Each script has its own help menu.    
+Run each script in this order, making sure to input the corresponding arguments as needed.   
+
+1. Create device: run `functions/create.sh`    
+2. Run `HID`, `ethernet`, and `mass_storage` as needed. Each will setup PenPi for their respective actions   
+3. Enable device by running `functions/on.sh`   
+4. If needed by a module run the post scripts for that module. FOr example `ethernet` benefits from `eth-connect` and `eth-default` and so on   
+
+In the event that more functionality is required later:
+1. Stop device by running `functions/off.sh`    
+2. Delete current device with `functions/remove.sh`   
+3. Redefine device using the previous list of steps   
 
 ### Variables
 
@@ -48,7 +58,7 @@ Some of the variables can match some of the previous defined variables. Just rem
 
 
 #### `<usb interface name>` 
-This is the name of the device of the function inside of the USB gadget. This should be unique for every network card that needs to be created within a single PenPi unit. It need to be a valid Linux folder name. prefered name convention `usbX`, where `X` is an integer. In theory this should end up being the name the operating system gives to the network interface, but don't quote me on this.   
+This is the name of the device of the function inside of the USB gadget. This should be unique for every network card that needs to be created within a single PenPi unit. It need to be a valid Linux folder name. preferred name convention `usbX`, where `X` is an integer. In theory this should end up being the name the operating system gives to the network interface, but don't quote me on this.   
 
 Example: `usb0`   
 
@@ -75,5 +85,5 @@ To be Implemented
 - implement USB storage creation scripts
    - make drive
    - delete drive
-   - USB gadget funtion - PenPi function
+   - USB gadget function - PenPi function
 - make python wrapper library for functions
