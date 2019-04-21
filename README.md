@@ -15,7 +15,7 @@ Run each script in this order, making sure to input the corresponding arguments 
 1. Create device: run `functions/create.sh`    
 2. Run `HID`, `ethernet`, and `mass_storage` as needed. Each will setup PenPi for their respective actions   
 3. Enable device by running `functions/on.sh`   
-4. If needed by a module run the post scripts for that module. FOr example `ethernet` benefits from `eth-connect` and `eth-default` and so on   
+4. If needed by a module run the post scripts for that module. For example `ethernet` benefits from `eth-connect` and `eth-default` and so on   
 
 In the event that more functionality is required later:
 1. Stop device by running `functions/off.sh`    
