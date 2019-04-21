@@ -29,7 +29,7 @@ PRODUCT_NAME=$4
 #PRODUCT_NAME="PenPi USB"
 
 
-#cd /sys/kernel/config/usb_gadget/
+cd /sys/kernel/config/usb_gadget/
 mkdir -p $DEVICE_NAME
 cd $DEVICE_NAME
 echo 0x1d6b > idVendor # Linux Foundation

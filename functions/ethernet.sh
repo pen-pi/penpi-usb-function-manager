@@ -3,7 +3,7 @@
 
 function printHelp(){
    echo "Usage:"
-   echo "  " $0 "<device-name/location-name> <usb interface name> <PenPi MAC> <taget MAC>"
+   echo "  " $0 "<device-name/location-name> <usb interface name> <PenPi MAC> <target MAC>"
    echo "forst octet of the first byte of the MAC addresses must be even."
 }
 
