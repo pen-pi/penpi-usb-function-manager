@@ -4,7 +4,7 @@
 function printHelp(){
    echo "Usage:"
    echo "  " $0 "<device-name/location-name> <usb interface name> <PenPi MAC> <target MAC>"
-   echo "forst octet of the first byte of the MAC addresses must be even."
+   echo "first octet of the first byte of the MAC addresses must be even."
 }
 
 
@@ -31,7 +31,7 @@ HOST=$4 # taget MAC
 #SELF="42:61:64:55:53:47" # penpi mac
 
 
-#cd /sys/kernel/config/usb_gadget/
+cd /sys/kernel/config/usb_gadget/
 mkdir -p $DEVICE_NAME
 cd $DEVICE_NAME
 
