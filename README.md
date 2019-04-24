@@ -76,6 +76,41 @@ Example: `"48:6f:73:74:50:45"`
 
 
 
+
+#### Mass Storage Variables
+
+This provides mass storage and CD-ROM capabilities.   
+
+Some of the variables can match some of the previous defined variables. Just remember that they must not match withing this same category. For Example if defining mass torage devices they must not have the same names but it is okay for one of them to have the same as HID device since they don't conflict.   
+
+
+#### `<location/name.img>` 
+This is the location where the mass storage image will be created at. Use the same location when using other commands. This is unique for every mass storage that need to be created.   
+
+Example: `/home/pi/usb-drive1.img`    
+
+##### `<size in kB>`
+This is the size of the `<location/name.img>` in kilobytes.   
+
+Example: `1024`   
+
+##### `<USB interface>`
+This is the name of the device of the function inside of the USB gadget. This should be unique for every mass storage that needs to be created within a single PenPi unit. It need to be a valid Linux folder name. preferred name convention `usbX`, where `X` is an integer.    
+
+Example: `usb0`   
+
+##### `<cd-rom>`
+This determines whether the mass storage should be mounted as a flash drive or as a CD-ROM. It only has two possible values: `0` or `1`.   
+
+Example: `1`   
+
+##### `<read only>`
+This determines if the mass storage should be read only. It only has two possible values: `0` or `1`. If mounted as CD-ROM then it will defaults to read only and can not be overwritten, the value should still be specified.   
+
+Example: `0`   
+
+
+
 ## As Python Lib
 
 To be Implemented
