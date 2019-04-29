@@ -51,22 +51,28 @@ class Penpi:
 
    hidEnabled = False
    networkCardEnabled = False
-
+   mountedLocations = []
+   nextInterdaceUSB = 0
 
    def __init__(self, devName="penpi", manuf="PenPi", prodName="PenPi USB", serial="fedcba9876545662"):
       self.deviceName = devName 
       self.deviceSerial = serial
       self.manufacturer = manuf
       self.productName = prodName
-      self.initialized  = False
-      self.deviceOn = False
-      self.hidEnabled = False
-      self.networkCardEnabled = False
+      self.init()
 
 
    def __del__(self):
       self.delete()
-      
+   
+   def init(self):
+      self.initialized  = False
+      self.deviceOn = False
+      self.hidEnabled = False
+      self.networkCardEnabled = False
+      self.mountedLocations = []
+      self.nextInterdaceUSB = 0
+
    def create(self):
       if not self.initialized:
          cmd = scripts_location+'/create.sh ' + self.deviceSerial +' "'+self.manufacturer+ '" "'+self.productName+'"'  
@@ -98,7 +104,7 @@ class Penpi:
    def delete(self):
       if self.initialized:
          self.deleteAnyDev(self.deleteAnyDev(self.deviceName))
-         self.initialized = False
+         self.init()
          return True
       else:
          return False
@@ -110,7 +116,7 @@ class Penpi:
       
    def enebleHID(self):
       if self.initialized and self.hidEnabled:
-         cmd = scripts_location+'/hid.sh "'+self.deviceName+'"" usb0'
+         cmd = scripts_location+'/hid.sh "'+self.deviceName+'" usb0'
          os.system(cmd)
          self.hidEnabled = True
          # TODO check if it worked, return accordingly
@@ -120,19 +126,47 @@ class Penpi:
 
    def enebleNetworkCard(self, hostMAC, targetMAC):
       if self.initialized and self.networkCardEnabled:
-         cmd = scripts_location+'/ethernet.sh "'+self.deviceName+'"" usb0 ' + hostMAC + ' '+ targetMAC 
+         cmd = scripts_location+'/ethernet.sh "'+self.deviceName+'" usb0 ' + hostMAC + ' '+ targetMAC 
          os.system(cmd)
          self.networkCardEnabled = True
          # TODO check if it worked, return accordingly
          return True
       else:
          return False
-   def enebleNetworkCard(self, hostMAC, targetMAC):
+   def enebleNetworkCardRand(self, hostMAC, targetMAC):
       return self.enebleNetworkCardRand(self, randMAC(), randMAC())
 
-   
+   def createMassStorage(self, location, size=1024): # size in kB
+      #remember to create only once
+      if  not os.path.exists(location)
+         cmd = scripts_location+'/create-flash-drive.sh '+ location+ ' ' + str(size) 
+         os.system(cmd)
+         # TODO check if it worked, return accordingly
+         return True
+      else:
+         return False
 
+   def mountMassStorage(self, location, ro=False, CDROM=False):
+      if ro:
+         readOnly='1'
+      else:
+         readOnly='0'
+      if CDROM:
+         cdrom = '1'
+         readOnly='1'
+      else:
+         cdrom='0'
 
+      if self.initialized and location not in self.mountedLocations and  os.path.exists(location):
+         interface = "usb"+str(self.nextInterdaceUSB)
+         cmd = scripts_location+'/mountStorage.sh "'+self.deviceName+'" ' + location + ' '+ interface+" "+ cdrom+' '+readOnly  
+         os.system(cmd)
+         self.mountedLocations.append(location)
+         self.nextInterdaceUSB = self.nextInterdaceUSB + 1
+         # TODO check if it worked, return accordingly
+         return True
+      else:
+         return False
 
 if __name__ == "__main__":
     # execute only if run as a script

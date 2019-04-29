@@ -3,7 +3,7 @@
 
 function printHelp(){
    echo "Usage:"
-   echo "  " $0 "<location/name.img> <size in kB>"
+   echo "  " $0 "<location> <size in kB>"
 }
 
 
