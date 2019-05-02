@@ -125,7 +125,7 @@ class Penpi:
          return False
 
    def enebleNetworkCard(self, hostMAC, targetMAC):
-      if self.initialized and self.networkCardEnabled:
+      if self.initialized and not self.networkCardEnabled:
          cmd = scripts_location+'/ethernet.sh "'+self.deviceName+'" usb0 ' + hostMAC + ' '+ targetMAC 
          os.system(cmd)
          self.networkCardEnabled = True
@@ -135,6 +135,23 @@ class Penpi:
          return False
    def enebleNetworkCardRand(self, hostMAC, targetMAC):
       return self.enebleNetworkCardRand(self, randMAC(), randMAC())
+
+   def networkCardConnect():
+      if self.initialized and self.networkCardEnabled:
+         cmd = scripts_location+'/eth-connect.sh usb0'
+         os.system(cmd)
+         # TODO check if it worked, return accordingly
+         return True
+      else:
+         return False
+   def networkCardAddDefaultRoute():
+      if self.initialized and self.networkCardEnabled:
+         cmd = scripts_location+'/eth-default.sh usb0'
+         os.system(cmd)
+         # TODO check if it worked, return accordingly
+         return True
+      else:
+         return False
 
    def createMassStorage(self, location, size=1024): # size in kB
       #remember to create only once
@@ -162,6 +179,18 @@ class Penpi:
          cmd = scripts_location+'/mountStorage.sh "'+self.deviceName+'" ' + location + ' '+ interface+" "+ cdrom+' '+readOnly  
          os.system(cmd)
          self.mountedLocations.append(location)
+         self.nextInterdaceUSB = self.nextInterdaceUSB + 1
+         # TODO check if it worked, return accordingly
+         return True
+      else:
+         return False
+
+   def mountMassStorage(self, isoFile): # works in a similar fashion as the usb storage
+      if self.initialized and isoFile not in self.mountedLocations and  os.path.exists(isoFile):
+         interface = "usb"+str(self.nextInterdaceUSB)
+         cmd = scripts_location+'/mount-iso.sh "'+self.deviceName+'" ' + isoFile + ' '+ interface  
+         os.system(cmd)
+         self.mountedLocations.append(isoFile)
          self.nextInterdaceUSB = self.nextInterdaceUSB + 1
          # TODO check if it worked, return accordingly
          return True
