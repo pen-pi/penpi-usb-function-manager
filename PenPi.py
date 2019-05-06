@@ -133,7 +133,7 @@ class Penpi:
          return True
       else:
          return False
-   def enebleNetworkCardRand(self, hostMAC, targetMAC):
+   def enebleNetworkCardRand(self):
       return self.enebleNetworkCardRand(self, randMAC(), randMAC())
 
    def networkCardConnect():
