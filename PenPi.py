@@ -43,7 +43,7 @@ def randSerial():
 class Penpi:
    #location = "/sys/kernel/config/usb_gadget/"
    deviceName = "penpi" 
-   deviceSerial = "fedcba9876545662"
+   deviceSerial = "abcdef0123456789"
    manufacturer = "PenPi"
    productName = "PenPi USB"
    initialized  = False
@@ -54,7 +54,7 @@ class Penpi:
    mountedLocations = []
    nextInterdaceUSB = 0
 
-   def __init__(self, devName="penpi", manuf="PenPi", prodName="PenPi USB", serial="fedcba9876545662"):
+   def __init__(self, devName="penpi", manuf="PenPi", prodName="PenPi USB", serial="abcdef0123456789"):
       self.deviceName = devName 
       self.deviceSerial = serial
       self.manufacturer = manuf
@@ -185,7 +185,7 @@ class Penpi:
       else:
          return False
 
-   def mountMassStorage(self, isoFile): # works in a similar fashion as the usb storage
+   def mountISO(self, isoFile): # works in a similar fashion as the usb storage
       if self.initialized and isoFile not in self.mountedLocations and  os.path.exists(isoFile):
          interface = "usb"+str(self.nextInterdaceUSB)
          cmd = scripts_location+'/mount-iso.sh "'+self.deviceName+'" ' + isoFile + ' '+ interface  

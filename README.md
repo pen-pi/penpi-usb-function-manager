@@ -1,7 +1,7 @@
 # Functions
 
 The scripts located inside the `functions` folder are the core of this library.    
-The python script will use these scripts to make, configure and delete the virtual device from the PenPi.   
+The python script will use these scripts to make, configure and delete the virtual device from the PenPi. With help of libPenPi we can stack more functionally to hard to manage usb resources. This allows us to implements more functionally on top of this, which eneble us to do things like remote configuration via wifi and bluetooth.      
 
 # Usage
 
@@ -9,7 +9,7 @@ Must me run as root
 
 ## As bash
 
-Each script has its own help menu.    
+Each script has its own help menu. Please refer to each scripts help menu for usage. Use this a guide as extra help    
 Run each script in this order, making sure to input the corresponding arguments as needed.   
 
 1. Create device: run `functions/create.sh`    
@@ -111,14 +111,44 @@ Example: `0`
 
 
 
-## As Python Lib
+## As Python LibPenPi
 
-To be Implemented
+
+#### `up()`
+#### `down()`
+
+### Initializers and Destructors
+#### `__init__(devName="penpi", manuf="PenPi", prodName="PenPi USB", serial="abcdef0123456789")`
+Default and only constructor for PenPi object.
+
+#### `init()`
+#### `create()`
+#### `delete()`
+
+### Functions
+Must be initialized, otherwise will return `False`.   
+
+#### `enebleHID()`
+#### `enebleNetworkCard(hostMAC, targetMAC)`
+#### `enebleNetworkCardRand(hostMAC, targetMAC)`
+#### `networkCardConnect()`
+#### `networkCardAddDefaultRoute()`
+#### `createMassStorage(location, size=1024)`
+#### `mountMassStorage(location, ro=False, CDROM=False)`
+#### `mountISO(isoFile)`
+
+### Other Functions
+#### `deleteAnyDev(devName)`
+#### `randSerial()`
+#### `randMAC()`
+
+
+
 
 # TODO
 
-- implement USB storage creation scripts
-   - make drive
-   - delete drive
-   - USB gadget function - PenPi function
-- make python wrapper library for functions
+- [x] implement USB storage creation scripts
+   - [x] make drive
+   - [x] delete drive
+   - [x] USB gadget function - PenPi function
+- [x] make python wrapper library for functions
