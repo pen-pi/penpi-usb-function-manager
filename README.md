@@ -115,7 +115,7 @@ Example: `0`
 LibPenPi is the heart of the PenPi project as later iterations of the project are committed libpenpi will replace outdated static scripts to initialize the device. This library will allow different kinds of integrations like remote management of the core components of PenPi. 
 
 #### `up()`
-This function should be called to bring the device up. Should be done after creating/initializing it and adding the necessary functions (see [Functions](#Funtions) section). It is important to note that the functions will only be enabled whenever the device is up.   
+This function should be called to bring the device up. Should be done after creating/initializing it and adding the necessary functions (see [Functions](#Functions) section). It is important to note that the functions will only be enabled whenever the device is up.   
 
 #### `down()`
 This Function will bring the device down. This is is required when trying to add or remove functions from PenPi core functionalities.
@@ -141,7 +141,7 @@ This is the serial number of the device. This in theory should be unique for eve
 This function is purely for internal use only. Used for initialization purposes only.
 
 #### `create()`
-This function is the one who initializes the PenPi. It creates the folder structure necessary to create any further functions. Remember to call this once after creating a PenPi instance or after calling the `remove` method. This function call is required before calling any of the functions detailed in the [Functions](#Funtions) section.
+This function is the one who initializes the PenPi. It creates the folder structure necessary to create any further functions. Remember to call this once after creating a PenPi instance or after calling the `remove` method. This function call is required before calling any of the functions detailed in the [Functions](#Functions) section.
 
 #### `delete()`
 This function will delete the folder structure and uninitialize the PenPi instance. This means this is the clean up method for the instance.This will remove everything, will leave instance in the same state as when creating the instance. Call this when it is required to add new functionality, keep in mind that you must redefine everything that was previously defined (disk creating is not required because those are save in disk). If you want re use this class you must initialize again.
@@ -163,19 +163,53 @@ This is the MAC of the target machine for this interface.
 #### `enebleNetworkCardRand()`
 Same as `enebleNetworkCard(hostMAC, targetMAC)` but this one the MAC addresses are randomized.
 
-#### `networkCardConnect()`
-#### `networkCardAddDefaultRoute()`
-#### `createMassStorage(location, size=1024)`
+
 #### `mountMassStorage(location, ro=False, CDROM=False)`
+This mounts the image `location` as a USB mass storage. There is no limit on how many mass storage devices can be created, as long as you have a different image for each one. To create an image use `createMassStorage(location, size=1024)`. 
+
+##### Input
+###### location
+This variable represents the location where the image of the mass storage is located.
+###### ro=False
+This variable will determine if the mass storage should be mounted as read only or not.
+###### CDROM=False
+This will determine if the mass storage should emulate a CD-ROM. Note that this is not DVD. If `True` then it will force a read only state on the mass storage.
+
 #### `mountISO(isoFile)`
+This will mount an `.iso` file as a mass storage. If the ISO is bootable then the mass storage device will also be bootable. This just like the `mountMassStorage()` function can be called as many times as needed. No image creation is necessary with this method just the iso file.
+
+##### Input
+###### isoFile
+This is the location of the ISO file to mount. 
+
+### Post `up()` Functions
+These functions require for the PenPi state to be up. 
+#### `networkCardConnect()`
+This functions makes the PenPi device connect to the network provided by the interface created by `enebleNetworkCard()`. Otherwise it would not have an IP address on that network. It is important to call `enebleNetworkCard(hostMAC, targetMAC)` before using this function.
+
+#### `networkCardAddDefaultRoute()`
+This function will add a default route to the route table of the PenPi device, this means that by calling this function PenPi will route all of its traffic by default to the network card created by `enebleNetworkCard(hostMAC, targetMAC)`. It is important to note that this step is not mandatory but is a feature that could help on certain situations.
+
+### One Time Functions
+#### `createMassStorage(location, size=1024)`
+This function will create an empty image. This image can be used with `mountMassStorage(location, ro=False, CDROM=False)`. Images are persistent, therefore create once...unless you need more. This function will automatically partition as FAT.
+##### Input
+###### location
+This is the location where the image will be stored.
+###### size=1024
+This is the size of the image in kilobytes.
 
 ### Other Functions
 #### `deleteAnyDev(devName)`
+This will delete the folder stricture of the device within the Kernel. This one is mostly for internal use unless you know what you are doing. It removes the folder structure under `/sys/kernel/config/usb_gadget/{devName}`, including `{devName}`. It does so in the correct order as specified by the [Kernel documentation](https://www.kernel.org/doc/Documentation/usb/gadget_configfs.txt).
+##### Input
+###### devName
+This should be the same name as the one in `__init__()`, or another name. 
+
 #### `randSerial()`
+This will return a random serial number.
 #### `randMAC()`
-
-
-
+This will return a random MAC address.
 
 # TODO
 
