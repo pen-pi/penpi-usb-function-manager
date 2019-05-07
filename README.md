@@ -1,7 +1,7 @@
 # Functions
 
 The scripts located inside the `functions` folder are the core of this library.    
-The python script will use these scripts to make, configure and delete the virtual device from the PenPi. With help of libPenPi we can stack more functionally to hard to manage usb resources. This allows us to implements more functionally on top of this, which eneble us to do things like remote configuration via wifi and bluetooth.      
+The python script will use these scripts to make, configure and delete the virtual device from the PenPi. With help of libPenPi we can stack more functionally to hard to manage usb resources. This allows us to implements more functionally on top of this, which enable us to do things like remote configuration via wifi and bluetooth.      
 
 # Usage
 
